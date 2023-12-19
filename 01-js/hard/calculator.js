@@ -16,6 +16,73 @@
   Once you've implemented the logic, test your code by running
 */
 
-class Calculator {}
+class Calculator {
+
+  constructor(){
+    this.result=0
+  }
+
+   add(number){
+    this.result+=number
+  }
+
+  subtract(number){
+    this.result-=number
+  }
+
+  multiply(number){
+    this.result*=number
+  }
+
+  divide(number){
+
+    if(number==0)
+    {
+      throw new Error("Number cannot be divided by zero")
+    }
+    this.result/=number
+
+  }
+
+  getResult()
+  {
+    return this.result
+  }
+
+  clear()
+  {
+    this.result=0
+  }
+
+  calculate(expression)
+  { 
+    //removing spaces
+    let newExpression = expression.replace(/\s+/g,'')
+
+   for(let i=0;i<newExpression.length;i++)
+   {
+    if((newExpression[i]>='0' && newExpression[i]<='9') || newExpression[i]=='.' || newExpression[i]=='(' || newExpression[i]==')' || newExpression[i]=='+' || newExpression[i]=='-' || newExpression[i]=='*' || newExpression[i]=='/')
+    {continue;
+    }
+    else{
+      throw new Error('Invalid expression. Please provide a valid expression')
+    }
+   }
+      
+   try{
+   this.result = eval(newExpression);
+    }catch(error){
+      throw new Error('Invalid expression. Please provide a valid expression')
+   }
+
+   //if number is divided by zero, eval() function returns the answer as infinity
+   if(this.result==Infinity)
+   {
+    throw new Error('Number cannot be divided by zero')
+   }
+}
+}
 
 module.exports = Calculator;
+
+

@@ -122,3 +122,4 @@ describe('Calculator', () => {
 		expect(() => calc.calculate(')10 + 2(')).toThrow(Error);
 	});
 });
+

@@ -40,10 +40,84 @@
   Testing the server - run `npm run test-todoServer` command in terminal
  */
   const express = require('express');
-  const bodyParser = require('body-parser');
-  
+  const bodyParser = require('body-parser');  
   const app = express();
+  const PORT = 3000;
   
   app.use(bodyParser.json());
+
+
+  let todos=[]
   
-  module.exports = app;
+
+  app.get('/todos', (req, res) => {
+    res.status(200).json(todos);
+  });
+  
+
+  app.get('/todos/:id',(req,res)=>{
+    
+    const id = req.params.id
+
+    const foundTodo = todos.find(todo => todo.id == id);
+
+    if (foundTodo) {
+        res.status(200).json(foundTodo);
+    } else {
+        res.status(404).json({
+            msg: "Todo item not found"
+        });}
+      })
+
+app.post('/todos',(req,res)=>{
+   
+   let newTodo=req.body
+   const newTodoId = todos.length + 1;
+   newTodo.id = newTodoId;
+   todos.push(newTodo)
+
+   res.status(201).json({ id: newTodoId });
+
+})
+
+app.put('/todos/:id',(req,res)=>{
+   
+  const id = req.params.id
+
+  const foundIndex = todos.findIndex(todo => todo.id == id);
+
+    if (foundIndex!=-1) {
+        todos[foundIndex]={...todos[foundIndex],...req.body}
+        res.status(200).json(todos[foundIndex])
+    } else {
+        res.status(404).json({
+            msg: "Todo item not found"
+        });}
+      })
+
+app.delete('/todos/:id',(req,res)=>{
+
+  const id = req.params.id
+
+  const foundIndex = todos.findIndex(todo => todo.id == id);
+
+  if (foundIndex!=-1) { 
+    todos.splice(foundIndex,1)
+    res.status(200).json(`id:${id} has been deleted from the todo list`)
+} else {
+    res.status(404).json({
+        msg: "Todo item not found"
+    });}
+  })
+
+
+
+  
+
+
+
+// app.listen(PORT, () => {
+//   console.log(`Server is running on http://localhost:${PORT}`);
+// });
+
+ module.exports = app;

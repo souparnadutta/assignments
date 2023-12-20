@@ -13,15 +13,13 @@ let errorCount = 0;
 
 //Handles errors
 const errorHandlerMiddleware = (err,req,res,next)=>{
-   errorCount+=1
-
    if(err){
+    errorCount+=1
     res.status(404).send(err.message)
-   }
-  
+   }else{  
    next();
+   }
 }
-
 
 //Handles invalid route
 const invalidRouteHandlerMiddleware = (req,res)=>{

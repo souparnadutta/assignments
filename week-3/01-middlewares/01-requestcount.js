@@ -11,10 +11,12 @@ let requestCount = 0;
 // maintain a count of the number of requests made to the server in the global
 // requestCount variable
 
-app.use('/',(req,res,next)=>{
+const requestCountMiddleware = (req,res,next)=>{
   requestCount+=1
   next()
-})
+}
+
+app.use('/',requestCountMiddleware)
 
 app.get('/user', function(req, res) {
   res.status(200).json({ name: 'john' });
@@ -31,10 +33,6 @@ app.get('/requestCount', function(req, res) {
 app.use('/',(req,res)=>{
   res.status(404).send("Invalid route/method entered")
 })
-
-
-
-
 
 
 app.listen(PORT,()=>{

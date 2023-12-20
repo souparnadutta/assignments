@@ -25,13 +25,6 @@ const isValidCredentials = (username,password) =>{
     return result.success
 }
 
-     if(isValidCredentials(username,password)){
-        let token = jwt.sign({username:username,password:password}, jwtPassword);
-        return token
-     }else{  
-       return null
-     }
-   
 /**
  * Generates a JWT for a given username and password.
  *

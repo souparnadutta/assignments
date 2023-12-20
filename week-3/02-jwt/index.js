@@ -22,10 +22,6 @@ const isValidCredentials = (username,password) =>{
 
     const result = userSchema.safeParse(userData)
 
-    // if (!result.success) {
-    //     console.log('Validation errors:', result.error.errors);
-    //   }
-
     return result.success
 }
 
